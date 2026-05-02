@@ -1,0 +1,24 @@
+{
+  "name": "hasagold-email-server",
+  "version": "1.0.0",
+  "description": "Professional email server for HASA GOLD STORE using Namecheap SMTP",
+  "main": "manual-verification-server.cjs",
+  "scripts": {
+    "start": "node manual-verification-server.cjs",
+    "dev": "nodemon manual-verification-server.cjs"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.7",
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": ["email", "smtp", "namecheap", "hasagoldstore"],
+  "author": "HASA GOLD STORE",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
