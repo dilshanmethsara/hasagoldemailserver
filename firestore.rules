@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Function to check if the user is an admin based on email
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == "admin@hasa.gold" || 
+        request.auth.token.email == "dmcreatorstudio04@gmail.com"
+      );
+    }
+
+    // Function to check if the user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // 1. Games Collection
+    match /games/{gameId} {
+      // Anyone can see the games
+      allow read: if true; 
+      // Only admins can modify the games
+      allow write: if isAdmin(); 
+    }
+    
+    // 2. Payment Configs
+    match /payment_configs/{configId} {
+      // Anyone can read payment configs (needed for checkout)
+      allow read: if true; 
+      // Only admins can modify payment configs
+      allow write: if isAdmin(); 
+    }
+
+    // 3. Orders
+    match /orders/{orderId} {
+      // Admins can read all orders. Users can read their own orders by userId or email.
+      allow read, list: if isAdmin() || 
+                       (isAuthenticated() && resource.data.userId == request.auth.uid) ||
+                       (isAuthenticated() && resource.data.userEmail == request.auth.token.email);
+      
+      // Anyone can create an order.
+      allow create: if (isAuthenticated() && request.resource.data.userId == request.auth.uid) || 
+                       request.resource.data.userId == "guest";
+                       
+      // Only admins can update or delete orders
+      allow update, delete: if isAdmin();
+    }
+
+    // 4. Users
+    match /users/{userId} {
+      // Users can read/write their own profile. Admins can read/write all.
+      allow read, write: if isAdmin() || (isAuthenticated() && request.auth.uid == userId);
+    }
+    
+    // 5. Default deny for any other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

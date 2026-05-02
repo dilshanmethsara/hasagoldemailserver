@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your HASA GOLD STORE Account</title>
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #333; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container { 
+            max-width: 650px; 
+            margin: 20px auto; 
+            background: #fff; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+        }
+        
+        .header { 
+            background: linear-gradient(135deg, #FFD700, #FFA500); 
+            padding: 50px 30px; 
+            text-align: center; 
+            position: relative; 
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: float 20s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-20px, -20px) rotate(360deg); }
+        }
+        
+        .logo { 
+            font-size: 36px; 
+            font-weight: 900; 
+            color: #000; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1); 
+            margin-bottom: 10px; 
+            position: relative;
+            z-index: 1;
+        }
+        
+        .tagline { 
+            color: #000; 
+            font-size: 16px; 
+            font-weight: 600; 
+            opacity: 0.9; 
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content { 
+            padding: 50px 30px; 
+            background: #fff;
+        }
+        
+        .greeting { 
+            font-size: 28px; 
+            font-weight: 700; 
+            color: #333; 
+            margin-bottom: 20px; 
+            text-align: center;
+        }
+        
+        .message { 
+            font-size: 16px; 
+            color: #666; 
+            margin-bottom: 30px; 
+            line-height: 1.8; 
+            text-align: center;
+        }
+        
+        .button-container { 
+            text-align: center; 
+            margin: 40px 0; 
+        }
+        
+        .verify-button { 
+            display: inline-block; 
+            background: linear-gradient(135deg, #FFD700, #FFA500); 
+            color: #000; 
+            padding: 20px 50px; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-weight: 700; 
+            font-size: 18px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            box-shadow: 0 10px 30px rgba(255,215,0,0.3); 
+            transition: all 0.3s ease; 
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .verify-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .verify-button:hover::before {
+            left: 100%;
+        }
+        
+        .verify-button:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 15px 40px rgba(255,215,0,0.4); 
+        }
+        
+        .link-text { 
+            font-size: 14px; 
+            color: #999; 
+            margin: 30px 0; 
+            text-align: center;
+        }
+        
+        .verification-link { 
+            background: #f8f9fa; 
+            padding: 20px; 
+            border-radius: 12px; 
+            word-break: break-all; 
+            font-family: 'Courier New', monospace; 
+            font-size: 12px; 
+            color: #666; 
+            border: 2px dashed #e9ecef; 
+            text-align: center;
+        }
+        
+        .security-notice { 
+            background: linear-gradient(135deg, #fff3cd, #fef5e7); 
+            border: 1px solid #ffeaa7; 
+            padding: 25px; 
+            border-radius: 12px; 
+            margin: 40px 0; 
+            border-left: 4px solid #f39c12;
+        }
+        
+        .security-notice h4 { 
+            color: #856404; 
+            margin-bottom: 15px; 
+            font-size: 18px; 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .security-notice p { 
+            color: #856404; 
+            font-size: 14px; 
+            margin: 8px 0; 
+        }
+        
+        .features { 
+            background: #f8f9fa; 
+            padding: 30px; 
+            border-radius: 12px; 
+            margin: 30px 0;
+        }
+        
+        .features h3 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 20px;
+        }
+        
+        .features ul { 
+            color: #666; 
+            margin-left: 20px; 
+            line-height: 2; 
+            list-style: none;
+            padding: 0;
+        }
+        
+        .features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .features li:last-child {
+            border-bottom: none;
+        }
+        
+        .features li::before {
+            content: '✅';
+            font-size: 16px;
+        }
+        
+        .footer { 
+            background: linear-gradient(135deg, #2c3e50, #34495e); 
+            color: #ecf0f1; 
+            padding: 40px; 
+            text-align: center; 
+        }
+        
+        .footer-logo { 
+            font-size: 24px; 
+            font-weight: 700; 
+            color: #FFD700; 
+            margin-bottom: 20px; 
+        }
+        
+        .footer-links { 
+            margin: 25px 0; 
+        }
+        
+        .footer-links a { 
+            color: #FFD700; 
+            text-decoration: none; 
+            margin: 0 15px; 
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover { 
+            color: #fff; 
+            text-decoration: underline; 
+        }
+        
+        .copyright { 
+            font-size: 12px; 
+            color: #95a5a6; 
+            margin-top: 25px; 
+            padding-top: 20px;
+            border-top: 1px solid #34495e;
+        }
+        
+        .social-icons {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFD700;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: #FFD700;
+            color: #2c3e50;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                border-radius: 12px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .logo {
+                font-size: 28px;
+            }
+            
+            .greeting {
+                font-size: 24px;
+            }
+            
+            .verify-button {
+                padding: 15px 30px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">HASA GOLD STORE</div>
+            <div class="tagline">Premium Game Top-Up Services</div>
+        </div>
+        
+        <div class="content">
+            <h2 class="greeting">Welcome, %DISPLAY_NAME%! 🎮</h2>
+            
+            <p class="message">
+                Thank you for joining HASA GOLD STORE! We're excited to have you as part of our elite gaming community. 
+                To ensure the security of your account and unlock all premium features, please verify your email address.
+            </p>
+            
+            <div class="button-container">
+                <a href="%LINK%" class="verify-button">
+                    Verify Email Address
+                </a>
+            </div>
+            
+            <p class="link-text">
+                Or copy and paste this link into your browser:
+            </p>
+            
+            <div class="verification-link">
+                %LINK%
+            </div>
+            
+            <div class="security-notice">
+                <h4>🔒 Security Notice</h4>
+                <p>• This verification link expires in 24 hours</p>
+                <p>• Never share this link with anyone</p>
+                <p>• If you didn't create an account, please ignore this email</p>
+                <p>• Our team will never ask for your password</p>
+            </div>
+            
+            <div class="features">
+                <h3>🎉 What You Get After Verification:</h3>
+                <ul>
+                    <li>Instant game top-ups with exclusive discounts</li>
+                    <li>Access to VIP member rewards and bonuses</li>
+                    <li>24/7 premium customer support</li>
+                    <li>Secure payment processing with buyer protection</li>
+                    <li>Early access to new games and special offers</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-logo">HASA GOLD STORE</div>
+            
+            <div class="social-icons">
+                <div class="social-icon">📱</div>
+                <div class="social-icon">💬</div>
+                <div class="social-icon">🎮</div>
+                <div class="social-icon">⭐</div>
+            </div>
+            
+            <div class="footer-links">
+                <a href="https://hasagold.store">Website</a>
+                <a href="https://hasagold.store/support">Support</a>
+                <a href="https://hasagold.store/terms">Terms</a>
+                <a href="https://hasagold.store/privacy">Privacy</a>
+            </div>
+            
+            <div class="copyright">
+                © 2024 HASA GOLD STORE. All rights reserved.<br>
+                This email was sent to %EMAIL% for account verification.<br>
+                Our mission: Providing the best gaming experience worldwide.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

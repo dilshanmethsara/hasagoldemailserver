@@ -1,0 +1,244 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://hasagold.store/#organization",
+      "name": "HASA GOLD STORE",
+      "url": "https://hasagold.store",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://hasagold.store/hasalogo.png",
+        "width": 512,
+        "height": 512
+      },
+      "description": "Instant game top-up service for mobile games including Free Fire, PUBG Mobile, Call of Duty Mobile, Clash of Clans, Mobile Legends, Genshin Impact, and Blood Strike.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "availableLanguage": "English"
+      },
+      "sameAs": [
+        "https://twitter.com/hasagoldstore"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://hasagold.store/#website",
+      "url": "https://hasagold.store",
+      "name": "HASA GOLD STORE",
+      "description": "Instant game top-up service for mobile games. Buy diamonds, UC, CP, gems, and more with secure payments and instant delivery.",
+      "publisher": {
+        "@id": "https://hasagold.store/#organization"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://hasagold.store/games?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "Store",
+      "@id": "https://hasagold.store/#store",
+      "name": "HASA GOLD STORE",
+      "url": "https://hasagold.store",
+      "description": "Online store for instant game top-up services",
+      "image": "https://hasagold.store/hasalogo.png",
+      "telephone": "",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "LK"
+      },
+      "openingHours": "Mo-Su 00:00-23:59",
+      "acceptsReservations": false,
+      "paymentAccepted": ["Credit Card", "Debit Card", "PayHere"],
+      "priceRange": "$",
+      "currenciesAccepted": "LKR"
+    },
+    {
+      "@type": "Product",
+      "@id": "https://hasagold.store/topup/free-fire#product",
+      "name": "Free Fire Diamonds Top-Up",
+      "description": "Buy Free Fire diamonds instantly with secure payment and instant delivery",
+      "url": "https://hasagold.store/topup/free-fire",
+      "image": "https://hasagold.store/game-freefire-CWixrSGS.jpg",
+      "brand": {
+        "@type": "Brand",
+        "name": "Garena"
+      },
+      "category": "Game Currency",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "LKR",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@id": "https://hasagold.store/#organization"
+        }
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://hasagold.store/topup/pubg-mobile#product",
+      "name": "PUBG Mobile UC Top-Up",
+      "description": "Buy PUBG Mobile UC instantly with secure payment and instant delivery",
+      "url": "https://hasagold.store/topup/pubg-mobile",
+      "image": "https://hasagold.store/game-pubg-BsZOrqWe.jpg",
+      "brand": {
+        "@type": "Brand",
+        "name": "KRAFTON"
+      },
+      "category": "Game Currency",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "LKR",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@id": "https://hasagold.store/#organization"
+        }
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://hasagold.store/topup/call-of-duty-mobile#product",
+      "name": "Call of Duty Mobile CP Top-Up",
+      "description": "Buy COD Mobile CP points instantly with secure payment and instant delivery",
+      "url": "https://hasagold.store/topup/call-of-duty-mobile",
+      "image": "https://hasagold.store/game-codm-BgN-wiJ_.jpg",
+      "brand": {
+        "@type": "Brand",
+        "name": "Activision"
+      },
+      "category": "Game Currency",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "LKR",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@id": "https://hasagold.store/#organization"
+        }
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://hasagold.store/topup/mobile-legends#product",
+      "name": "Mobile Legends Diamonds Top-Up",
+      "description": "Buy Mobile Legends diamonds instantly with secure payment and instant delivery",
+      "url": "https://hasagold.store/topup/mobile-legends",
+      "image": "https://hasagold.store/game-mlbb-1FM2lowc.jpg",
+      "brand": {
+        "@type": "Brand",
+        "name": "Moonton"
+      },
+      "category": "Game Currency",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "LKR",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@id": "https://hasagold.store/#organization"
+        }
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://hasagold.store/topup/clash-of-clans#product",
+      "name": "Clash of Clans Gems Top-Up",
+      "description": "Buy Clash of Clans gems instantly with secure payment and instant delivery",
+      "url": "https://hasagold.store/topup/clash-of-clans",
+      "image": "https://hasagold.store/game-coc-BZVCZt1e.jpg",
+      "brand": {
+        "@type": "Brand",
+        "name": "Supercell"
+      },
+      "category": "Game Currency",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "LKR",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@id": "https://hasagold.store/#organization"
+        }
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://hasagold.store/topup/genshin-impact#product",
+      "name": "Genshin Impact Genesis Crystals Top-Up",
+      "description": "Buy Genshin Impact Genesis Crystals instantly with secure payment and instant delivery",
+      "url": "https://hasagold.store/topup/genshin-impact",
+      "image": "https://hasagold.store/game-genshin-dID4yoUV.jpg",
+      "brand": {
+        "@type": "Brand",
+        "name": "miHoYo"
+      },
+      "category": "Game Currency",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "LKR",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@id": "https://hasagold.store/#organization"
+        }
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://hasagold.store/topup/blood-strike#product",
+      "name": "Blood Strike Top-Up",
+      "description": "Buy Blood Strike items instantly with secure payment and instant delivery",
+      "url": "https://hasagold.store/topup/blood-strike",
+      "image": "https://hasagold.store/game-bloodstrike-DYoBWM1a.jpg",
+      "brand": {
+        "@type": "Brand",
+        "name": "NetEase"
+      },
+      "category": "Game Currency",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "LKR",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@id": "https://hasagold.store/#organization"
+        }
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://hasagold.store/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How long does it take to receive my game top-up?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All game top-ups are delivered instantly after successful payment confirmation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What payment methods do you accept?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We accept credit cards, debit cards, and PayHere for secure online payments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it safe to buy game currency from HASA GOLD STORE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we use secure payment gateways and have a proven track record of successful transactions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which games do you support for top-up?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We support Free Fire, PUBG Mobile, Call of Duty Mobile, Mobile Legends, Clash of Clans, Genshin Impact, and Blood Strike."
+          }
+        }
+      ]
+    }
+  ]
+}

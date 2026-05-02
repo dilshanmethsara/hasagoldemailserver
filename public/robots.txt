@@ -1,0 +1,34 @@
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: *
+Allow: /
+Crawl-delay: 2
+
+# Allow all important files
+Allow: /games
+Allow: /topup
+Allow: /auth
+Allow: /dashboard
+
+# Disallow admin and internal paths
+Disallow: /admin
+Disallow: /admin-login
+Disallow: /api/
+
+# Disallow Firebase URL from being indexed
+Disallow: https://hasagoldstore.web.app/
+
+# Sitemap location - pointing to main domain
+Sitemap: https://hasagold.store/sitemap.xml

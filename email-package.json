@@ -1,0 +1,15 @@
+{
+  "name": "hasagold-email-server",
+  "version": "1.0.0",
+  "description": "Email server for HASA GOLD STORE",
+  "main": "simple-email-server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node simple-email-server.js"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.7",
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}
