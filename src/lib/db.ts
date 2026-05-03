@@ -9,7 +9,9 @@ import {
   orderBy, 
   Timestamp,
   setDoc,
-  updateDoc
+  updateDoc,
+  deleteDoc,
+  or
 } from "firebase/firestore";
 import { db } from "./firebase";
 import { Game, GAMES } from "@/data/games";
@@ -90,7 +92,7 @@ export const createOrder = async (orderData: any) => {
             orderId: docRef.id,
             gameName: orderData.gameName,
             amount: orderData.amount || 0,
-            currency: orderData.currency || 'USD',
+            currency: orderData.currency || 'LKR',
             status: 'pending',
             purchaseDate: new Date().toLocaleDateString()
           }
@@ -230,9 +232,15 @@ export const fetchUserOrders = async (userId: string, email?: string | null) => 
  */
 export const fetchAllUsers = async () => {
   try {
-    // Fetch all users
+    // Fetch all users (temporarily removing deleted filtering to isolate issue)
     const usersQuery = query(collection(db, "users"), orderBy("createdAt", "desc"));
     const usersSnapshot = await getDocs(usersQuery);
+    
+    console.log("DEBUG: Total users fetched:", usersSnapshot.docs.length);
+    usersSnapshot.docs.forEach(doc => {
+      const userData = doc.data();
+      console.log("DEBUG: User data:", { id: doc.id, deleted: userData.deleted, email: userData.email });
+    });
     
     // Fetch all orders to calculate statistics
     const ordersQuery = query(collection(db, ORDERS_COLLECTION), orderBy("createdAt", "desc"));
@@ -252,7 +260,7 @@ export const fetchAllUsers = async () => {
       // Calculate real order statistics for this user
       const userOrders = allOrders.filter(order => 
         order.userId === userId || 
-        (order.userEmail === userData.email && order.userId === "guest")
+          (order.userEmail === userData.email && order.userId === "guest")
       );
       
       const completedOrders = userOrders.filter(order => order.status === 'completed');
@@ -292,6 +300,25 @@ export const saveUser = async (userId: string, data: any) => {
 };
 
 /**
+ * Soft delete a user (mark as deleted instead of removing)
+ */
+export const softDeleteUser = async (userId: string) => {
+  try {
+    const userRef = doc(db, "users", userId);
+    await updateDoc(userRef, {
+      deleted: true,
+      deletedAt: Timestamp.now(),
+      updatedAt: Timestamp.now()
+    });
+    console.log("User soft deleted:", userId);
+    return true;
+  } catch (error) {
+    console.error("Error soft deleting user:", error);
+    return false;
+  }
+};
+
+/**
  * Fetch a single user by ID
  */
 export const fetchUser = async (userId: string) => {
@@ -299,7 +326,12 @@ export const fetchUser = async (userId: string) => {
     const docRef = doc(db, "users", userId);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      return docSnap.data();
+      const userData = docSnap.data();
+      // Don't return users marked as deleted
+      if (userData?.deleted) {
+        return null;
+      }
+      return userData;
     }
     return null;
   } catch (error) {
@@ -321,6 +353,205 @@ export const updateUser = async (userId: string, data: any) => {
     return true;
   } catch (error) {
     console.error("Error updating user:", error);
+    return false;
+  }
+};
+
+/**
+ * Generate password reset token
+ */
+export const generatePasswordResetToken = async (email: string) => {
+  try {
+    console.log("DEBUG: Starting password reset token generation for:", email);
+    
+    const token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    console.log("DEBUG: Generated token:", token);
+    
+    const resetData = {
+      email,
+      token,
+      createdAt: Timestamp.now(),
+      expiresAt: new Date(Date.now() + 3600000) // 1 hour expiry
+    };
+    
+    console.log("DEBUG: Reset data prepared:", resetData);
+    console.log("DEBUG: Attempting to write to Firestore...");
+    
+    await setDoc(doc(db, "passwordResets", token), resetData);
+    
+    console.log("Password reset token generated for:", email);
+    return token;
+  } catch (error) {
+    console.error("Error generating reset token:", error);
+    console.error("Error details:", {
+      message: error.message,
+      code: error.code,
+      stack: error.stack
+    });
+    return null;
+  }
+};
+
+/**
+ * Verify password reset token
+ */
+export const verifyPasswordResetToken = async (token: string) => {
+  try {
+    const docRef = doc(db, "passwordResets", token);
+    const docSnap = await getDoc(docRef);
+    
+    if (!docSnap.exists()) {
+      return { valid: false, message: "Invalid or expired token" };
+    }
+    
+    const resetData = docSnap.data() as any;
+    const now = new Date();
+    const expiresAt = resetData.expiresAt.toDate();
+    
+    if (now > expiresAt) {
+      return { valid: false, message: "Token has expired" };
+    }
+    
+    return { valid: true, email: resetData.email };
+  } catch (error) {
+    console.error("Error verifying reset token:", error);
+    return { valid: false, message: "Error verifying token" };
+  }
+};
+
+/**
+ * Update user password
+ */
+export const updateUserPassword = async (userId: string, newPassword: string) => {
+  try {
+    const docRef = doc(db, "users", userId);
+    await updateDoc(docRef, {
+      password: newPassword,
+      updatedAt: Timestamp.now()
+    });
+    console.log("Password updated for user:", userId);
+    return true;
+  } catch (error) {
+    console.error("Error updating password:", error);
+    return false;
+  }
+};
+
+/**
+ * Delete password reset token
+ */
+export const deletePasswordResetToken = async (token: string) => {
+  try {
+    await deleteDoc(doc(db, "passwordResets", token));
+    console.log("Password reset token deleted:", token);
+    return true;
+  } catch (error) {
+    console.error("Error deleting password reset token:", error);
+    return false;
+  }
+};
+
+/**
+ * Generate OTP code for email verification
+ */
+export const generateOTPCode = async (userId: string, email: string) => {
+  try {
+    console.log("DEBUG: Starting OTP generation for:", { userId, email });
+    
+    // Validate inputs
+    if (!userId || !email) {
+      console.error("DEBUG: Invalid inputs for OTP generation:", { userId, email });
+      return null;
+    }
+    
+    // Generate 6-digit OTP code
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log("DEBUG: Generated OTP code:", otp);
+    
+    // Set expiry to 15 minutes from now
+    const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+    console.log("DEBUG: OTP expiry time:", expiresAt);
+    
+    const otpData = {
+      userId,
+      email,
+      otp,
+      createdAt: Timestamp.now(),
+      expiresAt,
+      used: false
+    };
+    
+    console.log("DEBUG: OTP data to be stored:", otpData);
+    
+    // Store OTP in Firestore
+    await setDoc(doc(db, "otpCodes", otp), otpData);
+    
+    console.log("✅ OTP generated successfully for:", email, "Code:", otp);
+    return otp;
+  } catch (error) {
+    console.error("❌ Error generating OTP:", error);
+    console.error("Error details:", {
+      message: error.message,
+      code: error.code,
+      stack: error.stack
+    });
+    return null;
+  }
+};
+
+/**
+ * Verify OTP code
+ */
+export const verifyOTPCode = async (otp: string, email: string) => {
+  try {
+    const otpDoc = await getDoc(doc(db, "otpCodes", otp));
+    
+    if (!otpDoc.exists()) {
+      console.log("OTP not found:", otp);
+      return { valid: false, message: "Invalid OTP code" };
+    }
+    
+    const otpData = otpDoc.data() as any;
+    
+    // Check if OTP is expired
+    if (new Date() > otpData.expiresAt.toDate()) {
+      console.log("OTP expired:", otp);
+      return { valid: false, message: "OTP code has expired" };
+    }
+    
+    // Check if OTP matches email and is not used
+    if (otpData.email !== email || otpData.used) {
+      console.log("OTP mismatch or already used:", { email: otpData.email, used: otpData.used });
+      return { valid: false, message: "Invalid or already used OTP code" };
+    }
+    
+    console.log("OTP verified successfully for:", email);
+    return { valid: true, message: "OTP verified successfully" };
+    
+  } catch (error) {
+    console.error("Error verifying OTP:", error);
+    return { valid: false, message: "Error verifying OTP code" };
+  }
+};
+
+/**
+ * Mark OTP as used and update user email verification
+ */
+export const markOTPUsedAndUpdateUser = async (otp: string, userId: string) => {
+  try {
+    // Mark OTP as used
+    await updateDoc(doc(db, "otpCodes", otp), { used: true });
+    
+    // Update user email verification status
+    await updateDoc(doc(db, "users", userId), {
+      emailVerified: true,
+      emailVerifiedAt: Timestamp.now()
+    });
+    
+    console.log("OTP marked as used and user verified:", userId);
+    return true;
+  } catch (error) {
+    console.error("Error marking OTP as used:", error);
     return false;
   }
 };

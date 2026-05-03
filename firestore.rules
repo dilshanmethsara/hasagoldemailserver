@@ -52,7 +52,29 @@ service cloud.firestore {
       allow read, write: if isAdmin() || (isAuthenticated() && request.auth.uid == userId);
     }
     
-    // 5. Default deny for any other collections
+    // 5. Password Resets
+    match /passwordResets/{resetId} {
+      // Anyone can create a password reset (for forgot password functionality)
+      allow create: if true;
+      // Anyone can read their own password reset by token
+      allow read: if true;
+      // Users can delete their own password reset (after use)
+      allow delete: if true;
+      // No updates allowed - tokens are one-time use
+      allow update: if false;
+    }
+    
+    // 6. OTP Codes
+    match /otpCodes/{otpId} {
+      // Anyone can read OTP codes (for verification)
+      allow read: if true;
+      // Anyone can create OTP codes (for system use)
+      allow create: if true;
+      // Only system can update/delete OTP codes
+      allow update, delete: if false;
+    }
+    
+    // 7. Default deny for any other collections
     match /{document=**} {
       allow read, write: if false;
     }

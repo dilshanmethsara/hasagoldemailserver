@@ -22,6 +22,10 @@ import AdminNotifications from "./pages/admin/AdminNotifications.tsx";
 import AdminSettings from "./pages/admin/AdminSettings.tsx";
 import AdminLogin from "./pages/AdminLogin.tsx";
 import Auth from "./pages/Auth.tsx";
+import EmailAction from "./pages/EmailAction.tsx";
+import ForgotPassword from "./pages/ForgotPassword.tsx";
+import PasswordResetAction from "./pages/PasswordResetAction.tsx";
+import VerifyOTP from "./pages/VerifyOTP.tsx";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RefundPolicy from "./pages/RefundPolicy";
@@ -40,7 +44,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <ScrollToTop />
           <LiveChat />
           <Routes>
@@ -83,6 +87,10 @@ const App = () => (
             </Route>
             <Route path="/admin-login" element={<AdminLogin />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/password-reset-action" element={<PasswordResetAction />} />
+            <Route path="/verify-otp" element={<VerifyOTP />} />
+            <Route path="/email-action" element={<EmailAction />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/refund" element={<RefundPolicy />} />

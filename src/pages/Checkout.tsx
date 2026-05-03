@@ -61,6 +61,7 @@ const Checkout = () => {
       const orderData = {
         userId: user?.uid || "guest",
         userEmail: user?.email || "guest",
+        userName: user?.displayName || "Valued Customer",
         gameId: order.gameId,
         gameName: order.gameName,
         packageName: order.package.label,

@@ -7,7 +7,6 @@ const items = [
   { to: "/admin/games", label: "Games & Packages", icon: Gamepad2 },
   { to: "/admin/users", label: "Users", icon: Users },
   { to: "/admin/payments", label: "Payments", icon: CreditCard },
-  { to: "/admin/notifications", label: "Notifications", icon: Bell },
   { to: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
