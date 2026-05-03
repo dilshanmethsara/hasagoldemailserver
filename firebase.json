@@ -11,9 +11,20 @@
     ],
     "rewrites": [
       {
+        "source": "/api/send-email",
+        "function": "sendEmail"
+      },
+      {
+        "source": "/api/debug",
+        "function": "debugEmail"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
     ]
+  },
+  "functions": {
+    "source": "functions"
   }
 }
